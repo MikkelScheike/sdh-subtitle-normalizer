@@ -1,0 +1,325 @@
+{
+  "total_files": 2,
+  "total_entries": 1325,
+  "sdh_entries": 38,
+  "sdh_patterns_found": {
+    "sound_effects_brackets": [
+      "MUSIC PLAYING",
+      "DOOR SLAMS",
+      "FOOTSTEPS",
+      "PHONE RINGING"
+    ],
+    "action_descriptions": [
+      "[MUSIC PLAYING]",
+      "[DOOR SLAMS]",
+      "[FOOTSTEPS]",
+      "[PHONE RINGING]"
+    ],
+    "keywords": [
+      "music playing",
+      "narrator",
+      "door slams",
+      "sighs",
+      "footsteps",
+      "whispers",
+      "phone ringing",
+      "breathing"
+    ],
+    "speaker_labels": [
+      "JOHN:",
+      ">> NARRATOR:",
+      "MARY:",
+      "- TOM:",
+      "Official YIFY movies site:"
+    ],
+    "narrator_tags": [
+      ">> NARRATOR:"
+    ],
+    "sound_effects_parens": [
+      "sighs heavily",
+      "whispers"
+    ],
+    "environmental_sounds": [
+      "(sighs heavily)",
+      "(whispers)"
+    ],
+    "music_notes": [
+      " upbeat music ",
+      " Tinky Winky ",
+      " Tinky Winky ",
+      " Dipsy ",
+      " Abide with me ",
+      " Fast falls the eventide ",
+      " The darkness deepens ",
+      " Lord, with me abide ",
+      " Where is death's sting?",
+      " Where, grave ",
+      " Thy victory? ",
+      " I triumph still ",
+      " If Thou abide...",
+      " Oh me lads,\nyou should've seen us gannin'",
+      " Passing the folks\nalong the road ",
+      " Just as they were stannin'\nAll the lads and lasses ",
+      " There all\nwi' smilin' faces ",
+      " Gannin' along ",
+      " The Scotswood Road ",
+      " To see the Blaydon Races ",
+      " She stood there laughing ",
+      " I felt the knife\nin my hand ",
+      " And she laughed no more ",
+      " My, my, my Delilah ",
+      " Why, why, why, Delilah?",
+      " So before they come ",
+      " To break down the door ",
+      " Forgive me, Delilah\nI just couldn't take any more ",
+      " Forgive me, Delilah ",
+      " I just couldn't take\nany more "
+    ]
+  },
+  "sample_sdh_content": [
+    {
+      "original": "[MUSIC PLAYING]\nWelcome to our show!",
+      "normalized": "[MUSIC PLAYING] Welcome to our show!",
+      "sdh_detected": {
+        "sound_effects_brackets": [
+          "MUSIC PLAYING"
+        ],
+        "action_descriptions": [
+          "[MUSIC PLAYING]"
+        ],
+        "keywords": [
+          "music playing"
+        ]
+      }
+    },
+    {
+      "original": "JOHN: Hello everyone, how\nare you doing today?",
+      "normalized": "JOHN: Hello everyone, how are you doing today?",
+      "sdh_detected": {
+        "speaker_labels": [
+          "JOHN:"
+        ]
+      }
+    },
+    {
+      "original": ">> NARRATOR: The story begins\nin a small town.",
+      "normalized": ">> NARRATOR: The story begins in a small town.",
+      "sdh_detected": {
+        "speaker_labels": [
+          ">> NARRATOR:"
+        ],
+        "narrator_tags": [
+          ">> NARRATOR:"
+        ],
+        "keywords": [
+          "narrator"
+        ]
+      }
+    },
+    {
+      "original": "[DOOR SLAMS]\n(sighs heavily)",
+      "normalized": "[DOOR SLAMS] (sighs heavily)",
+      "sdh_detected": {
+        "sound_effects_brackets": [
+          "DOOR SLAMS"
+        ],
+        "sound_effects_parens": [
+          "sighs heavily"
+        ],
+        "action_descriptions": [
+          "[DOOR SLAMS]"
+        ],
+        "environmental_sounds": [
+          "(sighs heavily)"
+        ],
+        "keywords": [
+          "door slams",
+          "sighs"
+        ]
+      }
+    },
+    {
+      "original": "MARY: I think we should\ngo home now.\n[FOOTSTEPS]",
+      "normalized": "MARY: I think we should go home now. [FOOTSTEPS]",
+      "sdh_detected": {
+        "sound_effects_brackets": [
+          "FOOTSTEPS"
+        ],
+        "speaker_labels": [
+          "MARY:"
+        ],
+        "action_descriptions": [
+          "[FOOTSTEPS]"
+        ],
+        "keywords": [
+          "footsteps"
+        ]
+      }
+    },
+    {
+      "original": "\u266a upbeat music \u266a\nThis is a beautiful day\nfor a picnic.",
+      "normalized": "\u266a upbeat music \u266a This is a beautiful day for a picnic.",
+      "sdh_detected": {
+        "music_notes": [
+          " upbeat music "
+        ]
+      }
+    },
+    {
+      "original": "- TOM: Are you sure\nabout this?\n(whispers)",
+      "normalized": "- TOM: Are you sure about this? (whispers)",
+      "sdh_detected": {
+        "sound_effects_parens": [
+          "whispers"
+        ],
+        "speaker_labels": [
+          "- TOM:"
+        ],
+        "environmental_sounds": [
+          "(whispers)"
+        ],
+        "keywords": [
+          "whispers"
+        ]
+      }
+    },
+    {
+      "original": "[PHONE RINGING]\nLet me answer that.",
+      "normalized": "[PHONE RINGING] Let me answer that.",
+      "sdh_detected": {
+        "sound_effects_brackets": [
+          "PHONE RINGING"
+        ],
+        "action_descriptions": [
+          "[PHONE RINGING]"
+        ],
+        "keywords": [
+          "phone ringing"
+        ]
+      }
+    },
+    {
+      "original": "Official YIFY movies site:\nYTS.MX",
+      "normalized": "Official YIFY movies site: YTS.MX",
+      "sdh_detected": {
+        "speaker_labels": [
+          "Official YIFY movies site:"
+        ]
+      }
+    },
+    {
+      "original": "- \u266a Tinky Winky \u266a\n- \u266a Tinky Winky \u266a",
+      "normalized": "- \u266a Tinky Winky \u266a - \u266a Tinky Winky \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " Tinky Winky ",
+          " Tinky Winky "
+        ]
+      }
+    },
+    {
+      "original": "\u266a Dipsy \u266a",
+      "normalized": "\u266a Dipsy \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " Dipsy "
+        ]
+      }
+    },
+    {
+      "original": "\u266a Abide with me \u266a",
+      "normalized": "\u266a Abide with me \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " Abide with me "
+        ]
+      }
+    },
+    {
+      "original": "\u266a Fast falls the eventide \u266a",
+      "normalized": "\u266a Fast falls the eventide \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " Fast falls the eventide "
+        ]
+      }
+    },
+    {
+      "original": "\u266a The darkness deepens \u266a",
+      "normalized": "\u266a The darkness deepens \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " The darkness deepens "
+        ]
+      }
+    },
+    {
+      "original": "\u266a Lord, with me abide \u266a",
+      "normalized": "\u266a Lord, with me abide \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " Lord, with me abide "
+        ]
+      }
+    },
+    {
+      "original": "\u266a Where is death's sting?\u266a",
+      "normalized": "\u266a Where is death's sting?\u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " Where is death's sting?"
+        ]
+      }
+    },
+    {
+      "original": "- Head. Heart.\n- \u266a Where, grave \u266a",
+      "normalized": "- Head. Heart. - \u266a Where, grave \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " Where, grave "
+        ]
+      }
+    },
+    {
+      "original": "- \u266a Thy victory? \u266a\n- Draw...",
+      "normalized": "- \u266a Thy victory? \u266a - Draw...",
+      "sdh_detected": {
+        "music_notes": [
+          " Thy victory? "
+        ]
+      }
+    },
+    {
+      "original": "\u266a I triumph still \u266a",
+      "normalized": "\u266a I triumph still \u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " I triumph still "
+        ]
+      }
+    },
+    {
+      "original": "\u266a If Thou abide...\u266a",
+      "normalized": "\u266a If Thou abide...\u266a",
+      "sdh_detected": {
+        "music_notes": [
+          " If Thou abide..."
+        ]
+      }
+    }
+  ],
+  "files_analyzed": [
+    {
+      "filepath": "./data/sample_data/sample_sdh.srt",
+      "entries": 10,
+      "sdh_entries": 8,
+      "sdh_samples": []
+    },
+    {
+      "filepath": "./data/raw_srt/28 Years Later (2025).en.srt",
+      "entries": 1315,
+      "sdh_entries": 30,
+      "sdh_samples": []
+    }
+  ]
+}

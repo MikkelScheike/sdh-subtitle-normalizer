@@ -1,6 +1,6 @@
 {
   "model": {
-    "name": "t5-small",
+    "name": "t5-base",
     "max_input_length": 512,
     "max_target_length": 512
   },
@@ -21,8 +21,15 @@
   },
   "paths": {
     "data_dir": "./data",
-    "models_dir": "./models",
-    "output_dir": "./output"
+    "clean_training_data": "./data/clean_training_data",
+    "files_to_be_cleaned": "./data/files_to_be_cleaned", 
+    "cleaned_output": "./data/cleaned_output",
+    "models_dir": "./models"
+  },
+  "language": {
+    "target_language": "en",
+    "filter_by_language": true,
+    "supported_codes": ["en", "es", "fr", "de", "it", "pt", "ru", "ja", "ko", "zh", "da", "ar"]
   },
   "sdh_patterns": {
     "sound_effects_brackets": "\\[([^]]*)\\]",

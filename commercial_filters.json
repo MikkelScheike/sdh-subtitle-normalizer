@@ -1,0 +1,32 @@
+{
+  "commercial_patterns": [
+    "Visit our website at",
+    "Subscribe and like",
+    "Available on DVD",
+    "Coming soon to theaters",
+    "Rated PG-13",
+    "Now available on Blu-ray",
+    "Official YIFY movies site:",
+    "YTS.MX",
+    "Downloaded from",
+    "Downloaded from YTS.MX"
+  ],
+  "removal_rules": {
+    "exact_match": true,
+    "case_sensitive": false,
+    "remove_entire_subtitle": true,
+    "training_weight": 3
+  },
+  "custom_removals": [
+    {
+      "text": "EXAMPLE: Subscribe to our channel",
+      "replacement": "",
+      "description": "Remove subscription prompts"
+    },
+    {
+      "text": "EXAMPLE: Visit moviesite.com for more",
+      "replacement": "",
+      "description": "Remove website advertisements"
+    }
+  ]
+}

@@ -189,7 +189,7 @@ class SubtitleNormalizationTrainer:
 
 def main():
     # Initialize trainer
-    trainer = SubtitleNormalizationTrainer(model_name="t5-small")  # You can use t5-base for better results
+    trainer = SubtitleNormalizationTrainer(model_name="t5-base")  # Better English performance than t5-small
     
     # Load training data
     data_file = input("Enter path to training data JSON file: ").strip()

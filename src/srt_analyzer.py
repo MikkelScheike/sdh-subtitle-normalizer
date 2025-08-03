@@ -108,43 +108,15 @@ class SRTAnalyzer:
         return sdh_found
     
     def normalize_subtitle(self, text: str) -> str:
-        """Apply normalization rules to subtitle text"""
-        normalized = text
+        """Apply minimal normalization rules - most logic moved to training data"""
+        # Only basic cleanup - let the T5 model handle complex transformations
+        normalized = text.strip()
         
-        # Remove SDH patterns
-        for pattern in self.sdh_patterns.values():
-            normalized = re.sub(pattern, '', normalized, flags=re.IGNORECASE | re.MULTILINE)
-        
-        # Fix line breaks - merge lines that don't end with sentence-ending punctuation
-        lines = normalized.split('\n')
-        merged_lines = []
-        current_line = ""
-        
-        for line in lines:
-            line = line.strip()
-            if not line:
-                continue
-                
-            if current_line and not re.search(r'[.!?]$', current_line.strip()):
-                # Previous line doesn't end with punctuation, merge
-                current_line += " " + line
-            else:
-                if current_line:
-                    merged_lines.append(current_line)
-                current_line = line
-        
-        if current_line:
-            merged_lines.append(current_line)
-        
-        normalized = '\n'.join(merged_lines)
-        
-        # Clean up formatting
-        normalized = re.sub(r'>>+\s*', '', normalized)  # Remove >> markers
-        normalized = re.sub(r'^[-–]\s*', '', normalized, flags=re.MULTILINE)  # Remove leading dashes
-        normalized = re.sub(r'\s+', ' ', normalized)  # Normalize whitespace
+        # Basic whitespace cleanup only
+        normalized = re.sub(r'\s+', ' ', normalized)  # Normalize multiple spaces
         normalized = re.sub(r'\n\s*\n+', '\n', normalized)  # Remove extra blank lines
         
-        return normalized.strip()
+        return normalized
     
     def analyze_directory(self, directory: str) -> Dict:
         """Analyze all SRT files in a directory"""
