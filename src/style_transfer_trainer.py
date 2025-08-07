@@ -12,6 +12,7 @@ from transformers import (
     TrainingArguments, Trainer, DataCollatorForSeq2Seq
 )
 import os
+import argparse
 
 class StyleTransferDataset(Dataset):
     def __init__(self, data, tokenizer, max_input_length=512, max_target_length=512):
@@ -138,12 +139,8 @@ class StyleTransferTrainer:
             weight_decay=0.01,
             logging_dir=f'{output_dir}/logs',
             logging_steps=50,
-            evaluation_strategy="steps",
-            eval_steps=200,
             save_steps=500,
             save_total_limit=3,
-            load_best_model_at_end=True,
-            metric_for_best_model="eval_exact_match",
             learning_rate=learning_rate,
             fp16=torch.cuda.is_available(),
             gradient_accumulation_steps=2,  # Effective batch size = 16
@@ -217,13 +214,20 @@ class StyleTransferTrainer:
             print(f"Clean Output: {cleaned}")
 
 def main():
+    parser = argparse.ArgumentParser(description="Train the style transfer subtitle normalizer")
+    parser.add_argument("--data-file", dest="data_file", type=str, default=None, help="Path to style_transfer_data.json")
+    parser.add_argument("--output-dir", dest="output_dir", type=str, default="models/style_transfer_normalizer", help="Directory to save the trained model")
+    parser.add_argument("--epochs", dest="epochs", type=int, default=5, help="Number of training epochs")
+    parser.add_argument("--batch-size", dest="batch_size", type=int, default=8, help="Per-device batch size")
+    parser.add_argument("--model-name", dest="model_name", type=str, default="t5-small", help="Base model name (e.g., t5-small, t5-base)")
+    parser.add_argument("--learning-rate", dest="learning_rate", type=float, default=3e-5, help="Learning rate")
+    args = parser.parse_args()
+
     # Initialize trainer
-    trainer = StyleTransferTrainer(model_name="t5-small")
+    trainer = StyleTransferTrainer(model_name=args.model_name)
     
-    # Load style transfer data
-    data_file = input("Enter path to style transfer data file: ").strip()
-    if not data_file:
-        data_file = "data/style_transfer_data.json"
+    # Resolve data file
+    data_file = args.data_file or input("Enter path to style transfer data file: ").strip() or "data/style_transfer_data.json"
     
     if not os.path.exists(data_file):
         print(f"Style transfer data file {data_file} does not exist!")
@@ -235,28 +239,24 @@ def main():
     # Create datasets
     train_dataset, val_dataset = trainer.create_datasets(train_data, val_data)
     
-    # Set training parameters
-    output_dir = input("Enter output directory (default: models/style_transfer_normalizer): ").strip()
-    if not output_dir:
-        output_dir = "models/style_transfer_normalizer"
-    
-    epochs_input = input("Enter number of epochs (default: 5): ").strip()
-    num_epochs = int(epochs_input) if epochs_input else 5
-    
-    batch_size_input = input("Enter batch size (default: 8): ").strip()
-    batch_size = int(batch_size_input) if batch_size_input else 8
+    # Training params
+    output_dir = args.output_dir
+    num_epochs = args.epochs
+    batch_size = args.batch_size
+    learning_rate = args.learning_rate
     
     # Train model
-    trained_model = trainer.train_style_transfer_model(
+    trainer.train_style_transfer_model(
         train_dataset, 
         val_dataset, 
         clean_patterns,
         output_dir=output_dir,
         num_epochs=num_epochs,
-        batch_size=batch_size
+        batch_size=batch_size,
+        learning_rate=learning_rate,
     )
     
-    # Test on sample inputs
+    # Optional quick test on sample inputs
     test_inputs = [
         "[MUSIC PLAYING]\nHello, how are you today?",
         "JOHN: I think we should go now.\n[door slams]",

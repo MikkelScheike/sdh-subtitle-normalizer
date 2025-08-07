@@ -10,6 +10,7 @@ import torch
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from .srt_analyzer import SRTAnalyzer
 import glob
+import argparse
 
 class StyleTransferNormalizer:
     def __init__(self, model_path):
@@ -228,63 +229,52 @@ class StyleTransferNormalizer:
                 break
 
 def main():
-    # Get model path
-    model_path = input("Enter path to trained style transfer model: ").strip()
-    if not model_path:
-        model_path = "models/style_transfer_normalizer"
-    
+    parser = argparse.ArgumentParser(description="Apply the style transfer normalizer to SRT files")
+    parser.add_argument("--model-path", dest="model_path", type=str, default="models/style_transfer_normalizer", help="Path to trained style transfer model directory")
+    subparsers = parser.add_subparsers(dest="mode")
+
+    # Single-file mode
+    single_parser = subparsers.add_parser("file", help="Normalize a single SRT file")
+    single_parser.add_argument("--input", dest="input_file", type=str, required=True, help="Path to input SRT file")
+    single_parser.add_argument("--output", dest="output_file", type=str, default=None, help="Path to output SRT file")
+
+    # Batch mode
+    batch_parser = subparsers.add_parser("dir", help="Normalize all SRT files in a directory")
+    batch_parser.add_argument("--input-dir", dest="input_dir", type=str, required=True, help="Directory containing SRT files")
+    batch_parser.add_argument("--output-dir", dest="output_dir", type=str, default=None, help="Output directory for normalized files")
+
+    # Interactive mode
+    subparsers.add_parser("interactive", help="Interactive test mode")
+
+    args = parser.parse_args()
+
+    model_path = args.model_path
     if not os.path.exists(model_path):
         print(f"Model directory {model_path} does not exist!")
         print("Please train a style transfer model first.")
         return
-    
-    # Initialize normalizer
+
     try:
         normalizer = StyleTransferNormalizer(model_path)
     except Exception as e:
         print(f"Error loading model: {e}")
         return
-    
-    # Choose operation mode
-    print("\nStyle Transfer Normalizer - Choose mode:")
-    print("1. Normalize single SRT file")
-    print("2. Batch normalize directory")
-    print("3. Interactive test mode")
-    
-    choice = input("Enter choice (1-3): ").strip()
-    
-    if choice == "1":
-        # Single file mode
-        input_file = input("Enter path to SRT file: ").strip()
-        if not os.path.exists(input_file):
-            print(f"File {input_file} does not exist!")
+
+    if args.mode == "file":
+        if not os.path.exists(args.input_file):
+            print(f"File {args.input_file} does not exist!")
             return
-        
-        output_file = input("Enter output file path (optional): ").strip()
-        if not output_file:
-            output_file = None
-        
-        normalizer.normalize_srt_file(input_file, output_file)
-    
-    elif choice == "2":
-        # Directory mode
-        input_dir = input("Enter directory containing SRT files: ").strip()
-        if not os.path.exists(input_dir):
-            print(f"Directory {input_dir} does not exist!")
+        normalizer.normalize_srt_file(args.input_file, args.output_file)
+    elif args.mode == "dir":
+        if not os.path.exists(args.input_dir):
+            print(f"Directory {args.input_dir} does not exist!")
             return
-        
-        output_dir = input("Enter output directory (optional): ").strip()
-        if not output_dir:
-            output_dir = None
-        
-        normalizer.batch_normalize(input_dir, output_dir)
-    
-    elif choice == "3":
-        # Interactive test mode
+        normalizer.batch_normalize(args.input_dir, args.output_dir)
+    elif args.mode == "interactive" or args.mode is None:
+        # Default to interactive if no mode provided
         normalizer.interactive_test()
-    
     else:
-        print("Invalid choice!")
+        print("Invalid mode")
 
 if __name__ == "__main__":
     main()

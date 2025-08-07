@@ -19,7 +19,8 @@ setup(
         "scikit-learn>=1.0.0",
         "numpy>=1.20.0",
         "tokenizers>=0.12.0",
-        "accelerate>=0.12.0"
+        "accelerate>=0.12.0",
+        "sentencepiece>=0.1.99",
     ],
     python_requires=">=3.7",
     entry_points={

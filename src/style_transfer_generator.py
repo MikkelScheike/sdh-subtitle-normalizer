@@ -7,6 +7,7 @@ Learns clean subtitle style from good examples and applies to dirty subtitles
 import os
 import json
 import random
+import argparse
 from typing import List, Dict, Tuple
 from .srt_analyzer import SRTAnalyzer, SubtitleEntry
 
@@ -228,26 +229,24 @@ class StyleTransferGenerator:
         return contrastive_data
 
 def main():
+    parser = argparse.ArgumentParser(description="Generate style transfer training data")
+    parser.add_argument("--clean-dir", dest="clean_dir", type=str, default=None, help="Directory with CLEAN reference SRT files")
+    parser.add_argument("--output", dest="output_file", type=str, default=None, help="Output JSON file for training data")
+    parser.add_argument("--max-examples", dest="max_examples", type=int, default=5000, help="Maximum number of training examples to generate")
+    args = parser.parse_args()
+
     generator = StyleTransferGenerator()
-    
-    # Get clean reference directory
-    clean_dir = input("Enter directory containing CLEAN reference SRT files: ").strip()
-    if not clean_dir:
-        clean_dir = "data/raw_srt"
-    
+
+    # Resolve inputs (fallback to interactive if missing)
+    clean_dir = args.clean_dir or input("Enter directory containing CLEAN reference SRT files: ").strip() or "data/raw_srt"
     if not os.path.exists(clean_dir):
         print(f"Directory {clean_dir} does not exist!")
         return
-    
-    # Get output file
-    output_file = input("Enter output file name (default: style_transfer_data.json): ").strip()
-    if not output_file:
-        output_file = "data/style_transfer_data.json"
-    
-    # Get max examples
-    max_examples_input = input("Enter maximum training examples (default: 5000): ").strip()
-    max_examples = int(max_examples_input) if max_examples_input else 5000
-    
+
+    output_file = args.output_file or input("Enter output file name (default: style_transfer_data.json): ").strip() or "data/style_transfer_data.json"
+
+    max_examples = args.max_examples
+
     # Generate training data
     generator.generate_style_transfer_data(clean_dir, output_file, max_examples)
 
