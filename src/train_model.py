@@ -117,7 +117,7 @@ class SubtitleNormalizationTrainer:
             weight_decay=0.01,
             logging_dir=f'{output_dir}/logs',
             logging_steps=100,
-            evaluation_strategy="steps",
+            eval_strategy="steps",
             eval_steps=500,
             save_steps=1000,
             save_total_limit=2,

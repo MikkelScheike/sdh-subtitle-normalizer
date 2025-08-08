@@ -7,8 +7,9 @@ Creates input-output pairs for training a text-to-text model
 import os
 import json
 import random
+import re
 from typing import List, Tuple, Dict
-from .srt_analyzer import SRTAnalyzer, SubtitleEntry
+from srt_analyzer import SRTAnalyzer, SubtitleEntry
 
 class TrainingDataGenerator:
     def __init__(self):
