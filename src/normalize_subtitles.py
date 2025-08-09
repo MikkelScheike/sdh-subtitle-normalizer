@@ -16,10 +16,20 @@ class SubtitleNormalizer:
         
         self.tokenizer = T5Tokenizer.from_pretrained(model_path)
         self.model = T5ForConditionalGeneration.from_pretrained(model_path)
+
+        # Select device: prefer Apple Metal (MPS) -> CUDA -> CPU
+        if torch.backends.mps.is_available():
+            self.device = torch.device("mps")
+        elif torch.cuda.is_available():
+            self.device = torch.device("cuda")
+        else:
+            self.device = torch.device("cpu")
+        
+        self.model.to(self.device)
         self.model.eval()  # Set to evaluation mode
         
         self.analyzer = SRTAnalyzer()
-        print("Model loaded successfully!")
+        print(f"Model loaded successfully! Using device: {self.device}")
     
     def normalize_text(self, text):
         """Normalize a single subtitle text using the trained model"""
@@ -32,7 +42,7 @@ class SubtitleNormalizer:
             return_tensors="pt", 
             max_length=512, 
             truncation=True
-        ).input_ids
+        ).input_ids.to(self.device)
         
         # Generate
         with torch.no_grad():

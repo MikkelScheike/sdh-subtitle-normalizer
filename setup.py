@@ -12,6 +12,10 @@ setup(
     author="Your Name",
     author_email="your.email@example.com",
     packages=find_packages(),
+    py_modules=[
+        # Expose top-level training utility scripts
+        'train_mps',
+    ],
     install_requires=[
         "torch>=1.9.0",
         "transformers>=4.20.0",
@@ -29,6 +33,7 @@ setup(
             'generate-training-data=src.training_data_generator:main',
             'train-normalizer=src.train_model:main',
             'normalize-subtitles=src.normalize_subtitles:main',
+            'train-mps=train_mps:main',
         ],
     },
     classifiers=[

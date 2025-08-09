@@ -107,6 +107,17 @@ class SubtitleNormalizationTrainer:
                    num_epochs=3, batch_size=8, learning_rate=5e-5):
         """Train the model"""
         
+        # Select device: prefer MPS (Apple), then CUDA, else CPU
+        if torch.backends.mps.is_available():
+            device = torch.device("mps")
+        elif torch.cuda.is_available():
+            device = torch.device("cuda")
+        else:
+            device = torch.device("cpu")
+
+        # Move model explicitly to device (Trainer will also handle device, but this is safe)
+        self.model.to(device)
+
         # Training arguments
         training_args = TrainingArguments(
             output_dir=output_dir,
@@ -124,7 +135,8 @@ class SubtitleNormalizationTrainer:
             load_best_model_at_end=True,
             metric_for_best_model="eval_accuracy",
             learning_rate=learning_rate,
-            fp16=torch.cuda.is_available(),  # Use mixed precision if CUDA available
+            fp16=torch.cuda.is_available(),  # mixed precision only on CUDA
+            bf16=False,  # keep disabled by default for MPS/CPU
         )
         
         # Data collator

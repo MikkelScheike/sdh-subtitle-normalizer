@@ -19,6 +19,16 @@ class StyleTransferNormalizer:
         
         self.tokenizer = T5Tokenizer.from_pretrained(model_path)
         self.model = T5ForConditionalGeneration.from_pretrained(model_path)
+
+        # Select device: prefer Apple Metal (MPS) -> CUDA -> CPU
+        if torch.backends.mps.is_available():
+            self.device = torch.device("mps")
+        elif torch.cuda.is_available():
+            self.device = torch.device("cuda")
+        else:
+            self.device = torch.device("cpu")
+        
+        self.model.to(self.device)
         self.model.eval()
         
         # Load learned clean patterns
@@ -45,7 +55,7 @@ class StyleTransferNormalizer:
             return_tensors="pt", 
             max_length=512, 
             truncation=True
-        ).input_ids
+        ).input_ids.to(self.device)
         
         # Generate with style-aware parameters
         with torch.no_grad():
