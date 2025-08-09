@@ -77,14 +77,12 @@ def main():
         load_best_model_at_end=True,
         metric_for_best_model="eval_accuracy",
         learning_rate=5e-5,
-        learning_rate_scheduler_type="cosine",  # Better for longer training
+        lr_scheduler_type="cosine",  # Better for longer training
         dataloader_pin_memory=False,
         gradient_accumulation_steps=1,
         max_grad_norm=1.0,
         
-        # Early stopping to prevent overfitting with 5 epochs
-        early_stopping_patience=3,
-        greater_is_better=True,
+        # Removed early stopping parameters - not supported in this version
     )
     
     # Data collator
